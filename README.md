@@ -10,7 +10,9 @@
 - Enabled administrators to manage products, monitor orders, and handle refunds and customer support;
 - Integrated a FAQ section and customer inquiry system to improve user assistance.
 
-# Screenshots
+# Video
+
+https://github.com/phpc99/lbaw-project/blob/main/docs/lbaw2456.mp4
 
 # Authors
 - Bernardo Marques Soares da Costa, up202207579@up.pt
