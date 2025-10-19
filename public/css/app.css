@@ -1,0 +1,848 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+
+body {
+    h1, h2, h3, h5, h5 {
+      font-family: 'Playfair Display', serif;
+      color: #11565b;
+    }
+    background-color: #ffffff;
+    /*color: #248f89;*/
+    color: #4a2c09;
+  }
+
+header {
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 10px;
+}
+  main > header {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    background: linear-gradient(to left, #bccdb9, #ffffff);
+    /*background: linear-gradient(to left, #dcebde, #ffffff);*/
+    border-radius: 10px;
+    padding: 1em;
+  }
+  main > header h1 {
+    margin: 0;
+  }
+  main > header a.button {
+    margin: 1em;
+    justify-self: center;
+  }
+  main > header span {
+    margin: 1em;
+    justify-self: center;
+  }
+  .static-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  #cards {
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 20px; 
+    width: 100%; 
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: left;
+  }
+  #cards article.card {
+    border-radius: 2%;
+    display: flex;
+    flex-direction: column;
+    background-color: #eaedeb;
+    /*background-color: #c9dce4;*/
+    /*background-color: #9fc5c1;*/
+    padding: 1em;
+    margin: 1em;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.5s ease;;
+  }
+  #cards article.card:hover {
+    background-color: #bccdb9;
+    transform: scale(1.05); 
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); 
+  }
+  #cards article.card header {
+    display: flex;
+    align-items: center;
+  }
+  #cards article.card header h2 {
+    flex-grow: 1;
+  }
+  #cards article.card header a.delete {
+    display: none;
+    font-size: 2.6rem;
+    margin-top: .5rem;
+    margin-bottom: 2.5rem;
+    line-height: 1.25;
+  }
+  #cards article.card header:hover a.delete {
+    display: inline;
+  }
+  #cards article.card li {
+    list-style-type: none;
+  }
+  #cards article.card li label {
+    display: flex;
+    align-items: baseline;
+  }
+  #cards article.card li label span {
+    margin-left: .5em;
+    flex-grow: 1;
+  }
+  #cards article.card li label a {
+    display: none;
+  }
+  #cards article.card li label:hover a {
+    display: inline;
+  }
+  #cards article.card input:checked + span {
+    text-decoration: var(--primary-color) solid line-through;
+  }
+  #cards article.card ul {
+    margin: 0;
+  }
+  #cards article.card form {
+    margin: 0;
+  }
+  #cards article.card input[type=text] {
+    background-color: white;
+    margin: 0;
+  }
+  #content label {
+    font-weight: normal;
+  }
+  #content > form {
+    margin: 0 auto;
+    padding: 1em;
+    max-width: 20em;
+    border: 1px solid #d2afe7;
+  }
+  #content > form .error {
+    font-weight: bold;
+    color: #862323;
+  }
+  #content > form .success {
+    font-weight: bold;
+    color: #11565b;
+  }
+  #content > form input {
+    background-color: white;
+  }
+  @media (max-width: 70em) {
+    #cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    main > header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+    }
+    main > header h1 {
+      grid-row-end: span 2;
+    }
+  }
+  @media (max-width: 40em) {
+    #cards {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 25em) {
+    body {
+      margin: 0;
+    }
+    main > header {
+      margin: 0;
+      padding: 0.5em;
+    }
+    main > header span {
+      margin: 0;
+    }
+    #content form {
+      margin: 0;
+      max-width: 25em;
+    }
+    article.card {
+      margin: 0;
+      border-bottom: 1px solid rgba(96, 108, 118, 0.4);
+    }
+  }
+  .hidden {
+    display: none;
+  }
+
+  button {
+    /*background-color: #376537;*/
+    background-color: #11565b;
+    border-color: #508992;
+    
+  }
+  a.button {
+    background-color: #11565b;
+    border-color: #508992;
+  }
+  a.button.button-outline {
+    color: #508992;
+  }
+  a {
+    color: #376537;
+  }
+  input[type=text]:focus,
+  input[type=email]:focus,
+  input[type=password]:focus {
+    border-color: #376537;
+  }
+  
+  input[type=number]::-webkit-inner-spin-button, 
+  input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+
+@import url('https://fonts.googleapis.com/css2?family=Sulphur+Point:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Actor&family=Sulphur+Point:wght@300;400;700&display=swap');
+
+/*navigation bar*/
+body .navbar {
+    font-family: "Actor", sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px ;
+}
+
+/* Search Bar */
+.search-bar-container form {
+  display: flex;
+  flex-direction: row; /* Stack input and dropdown inside */
+  gap: 10px; /* Add spacing between input and dropdown */
+  margin: 0;
+  padding-top: 20px;
+}
+
+.search-bar-container input[type="text"] {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: left;
+  padding-left: 15px;
+  font-size: 1rem;
+  line-height: 1.5;
+  min-width: 200px;
+}
+
+.search-bar-container select {
+  font-size: 1rem;
+  line-height: 1.5;
+  border: 1px solid #ccc;
+  color: gray;
+  border-radius: 4px;
+  width: 100px;
+}
+
+.search-bar-container button.shop-button {
+  background-color: #376537;
+  color: #dcebde;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 8px;
+  text-align: center;
+  transition: background-color 0.3s;
+  margin-left: 10px; /* Add some spacing from the input */
+  padding: 10px 10px;
+}
+
+.search-bar-container button.shop-button:hover {
+  background-color: gray;
+}
+
+.search-bar-container .search-bar-flex {
+  display: flex;
+}
+
+/* Hover Effect */
+.search-bar-container select:hover {
+  background-color: #e8e8e8; /* Light gray when hovered */
+  border-color: #376537; /* Highlight border on hover */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for focus effect */
+}
+
+/* Focus Effect */
+.search-bar-container select:focus {
+  outline: none;
+  border-color: #376537; /* Match with button color */
+  box-shadow: 0 0 8px rgba(55, 101, 55, 0.5); /* Greenish glow on focus */
+}
+
+.navbar-links {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+
+.navbar-links a {
+  position: relative; 
+    text-decoration: none;
+    color: #333;
+    font-size: 15px;
+    padding: 5px 10px;
+    transition: background-color 0.3s;
+    overflow: hidden;
+}
+
+.navbar-links a:hover {
+    /*background-color: #ddd;*/
+    border-radius: 5px;
+}
+
+a .badge {
+  position: absolute; 
+  top: 0;             
+  right: 0;           
+  border-radius: 50%; 
+  padding: 0.2em 0.6em; 
+  font-size: 1rem;   
+  font-weight: bold;   
+  display: inline-block;
+  min-width: 1.5em;   
+  text-align: center;  
+  transform: translate(50%, -50%); 
+  z-index: 1;          
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    /*transform: translateX(80px);*/
+}
+
+.auth-buttons .btn {
+    text-decoration: none;
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+/* Login Button */
+.auth-buttons .btn-login {
+    background-color: #007bff; /* Blue */
+    color: white;
+}
+
+.auth-buttons .btn-login:hover {
+    background-color: #0056b3;
+}
+
+.search-bar-container {
+  flex: 0 0 auto; /* Prevent resizing */
+  margin-right: auto; /* Align search bar to the left */
+  margin-left: 20px;
+}
+
+
+/* Prevent shifting for navbar links and auth section */
+.navbar-links, .auth-section {
+  flex: 0 0 auto; /* Prevent shrinking and maintain their space */
+  visibility: visible; /* Reserve space even when elements are hidden */
+}
+
+.auth-section {
+  margin-left: 40px;
+}
+
+/* For hidden elements */
+.navbar-links a.hidden,
+.auth-buttons a.hidden {
+    visibility: hidden; /* Reserve space but make the element invisible */
+}
+
+.user-profile-generic {
+  width: 50px; 
+  height: 50px; 
+  border-radius: 50%; 
+  object-fit: cover; 
+  border: 2px solid #e8e8e8;
+}
+
+.user-profile-pic {
+  width: 60px; 
+  height: 60px; 
+  border-radius: 50%; 
+  object-fit: cover; 
+  border: 2px solid #e8e8e8;
+}
+
+
+/* Products Title and Details */
+.card-header {
+  position: relative;
+  width: 100%;
+}
+
+.card-img-top {
+  width: 67%;
+  object-fit: cover; 
+  object-position: center;
+  height: 9em;
+  border-radius: 8px 8px 0 0;
+}
+
+.wishlist-form {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2; /* Ensures the wishlist button is above the image */
+}
+
+.add-to-wishlist {
+  background: none;
+  border: none;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.add-to-wishlist:hover {
+  background: none;
+}
+
+.product-title {
+  height: 50px;
+  margin-bottom: 0px;
+}
+.product-title h2 {
+  font-size: 1.1em;
+}
+
+
+.product-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: left;
+    margin-bottom: 15px;
+}
+
+.product-details p {
+    margin: 5px 0 5px 0;
+}
+/* End of Products Title and Details */
+
+/* Footer */
+.container {
+  max-width: 1200px; /* Adjust to desired width */
+  margin: 0 auto; /* Centers the content */
+  padding: 0 20px; /* Optional: Add horizontal padding */
+  width: 100%; /* Ensure responsiveness */
+}
+
+
+
+.products-container {
+  max-width: 1200px; 
+  margin: 0 auto; 
+  padding: 0 20px; 
+  width: 100%; 
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  text-align: center;
+}
+
+.catalog-header {
+  display: flex;
+  align-items: center; 
+  justify-content: space-between; 
+  margin-bottom: 25px;
+}
+
+.catalog-header h1 {
+  margin: 0; 
+}
+
+.catalog-header .filter-image {
+  margin-top: 1em;
+  margin-left: 1em;
+}
+
+.filter-box-wrapper {
+  position: relative;
+}
+
+.filter-box {
+  position: absolute;
+  top: 0px; /* Adjust based on the size of the header */
+  
+  width: 20em; /* Adjust to your preferred width */
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: 5px;
+  z-index: 100;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.filter-box.show {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+.show-products-header {
+  display: flex;
+  flex-direction: row;
+}
+
+.show-products-header h1 {
+  margin-right: 1.2em;
+}
+
+.show-products-header .show-product-buttons {
+  margin-top: 0.8em;
+  margin-bottom: 0px;
+}
+
+.container-attr {
+  margin-top: 1.5em;
+  font-size: 1.3em;
+  display: flex;
+  flex-direction: row;
+  gap: 4em;
+}
+
+.container-attr p:nth-last-child(2) {
+  margin-right: -1.5em;
+}
+
+.hover-effect-icon, .hover-effect-icon2 {
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+  border-radius: 50%; /* Optional: Makes the background glow circular */
+}
+
+.hover-effect-icon:hover {
+  transform: scale(1.2); /* Increases size by 20% */
+  box-shadow: 0 0 10px #11565b; /* Green glow effect */
+}
+
+.hover-effect-icon2:hover {
+  transform: scale(1.2); /* Increases size by 20% */
+  box-shadow: 0 0 10px #862323; /* Green glow effect */
+  object-fit: contain;
+}
+
+/*for admin*/
+
+
+.categories-dropdown {
+  display: none;
+  margin-left: 10px; /* Add a small gap between the title and the button */
+}
+
+.categories-button:hover {
+  color: #5d2c82;
+}
+
+
+
+/*
+@keyframes fadeInFromLeft {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+}
+.container > h1 {
+  margin-bottom: 1em;
+  opacity: 0; 
+  animation: fadeIn 2s ease-in; 
+}*/
+
+button#add-product-button {
+  margin: 1em auto;
+}
+
+#add-product-modal {
+  position: absolute;
+  top: 100%; 
+  left: 50%; 
+  width: 30em;
+  background: #fff;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  display: none; 
+  opacity: 0; 
+  transition: opacity 0.3s ease, transform 0.3s ease; 
+}
+
+#add-product-modal.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0); /* Center and no vertical shift */
+}
+
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+  display: flex; /* Enables Flexbox */
+  flex-direction: column;
+  /*align-items: center; /* Centers text vertically */
+  background-color: #376537;
+  color: white;
+  text-align: center;
+  font-size: 0.9em; /* Slightly smaller text size */
+  margin-top: auto; /* Ensures footer stays at the bottom of the page */
+}
+
+footer p {
+  margin: 5px 0 0 0;
+}
+
+.static-footer {
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+}
+
+.static-footer a {
+  color: white;
+  text-decoration: none;
+  margin: 0 10px 0 10px;
+}
+/* End of footer */
+
+
+/* Line animation using ::after pseudo-element */
+a.cool-link::after {
+  content: ""; 
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0%; 
+  height: 2px;
+  background-color: #4e6037; 
+  transition: width 0.7s ease-in-out; 
+}
+
+a.cool-link:hover::after {
+  width: 100%; 
+}
+
+a.cool-link:hover {
+  color: #4e6037;
+}
+
+
+
+
+.custom-pagination {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}
+
+.custom-pagination li {
+  margin: 0 5px;
+}
+
+.custom-pagination a {
+  text-decoration: none;
+  padding: 5px 10px;
+  color: #1e5b62;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.custom-pagination a:hover {
+  background-color: #1e5b62;
+  color: #fff;
+}
+
+.custom-pagination .active span,
+.custom-pagination .disabled span {
+  padding: 5px 10px;
+  color: #999;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* Odrers */
+.orders-table td.status-column,
+.orders-table th.status-column {
+    width: 150px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.orders-table td.status-column select {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin: 0 auto;
+    display: block;
+}
+
+.orders-table td.status-column select:hover {
+    border-color: #376537;
+}
+
+.orders-table td.status-column select:focus {
+    outline: none;
+    border-color: #376537;
+    box-shadow: 0 0 5px rgba(55, 101, 55, 0.5);
+}
+
+.orders-table td.status-column form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilo para o botão de categorias */
+.categories-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.categories-button {
+  background-color: #f8f9fa;
+  border: 1px solid #ccc;
+  color: #333;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.categories-button:hover {
+  background-color: #ddd;
+}
+
+/* Dropdown Content */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  background-color: white;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  min-width: 200px;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 10px 15px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+/* Mostrar dropdown ao hover */
+.categories-dropdown:hover .dropdown-content {
+  display: block;
+}
+
+
+
+/*cart*/
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+/* Add transition for smooth effect */
+.quantity-controls a {
+  display: inline-block;
+  transition: transform 0.2s, opacity 0.2s;
+}
+/* Effect when clicked */
+.quantity-controls a:active {
+  transform: scale(0.9); /* Scale down slightly */
+  opacity: 0.7; /* Slightly reduce opacity */
+}
+
+.cart-total-display.updated {
+  transition: background-color 0.3s;
+  background-color: yellow;
+}
+
+/*user profile*/
+.profile-first-line {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}
+
+.profile-first-line #toggle-edit-form {
+  margin-left: 1.2em;
+  margin-top: 1.5em;
+}
+
+#edit-form {
+  display: none; 
+  position: absolute; 
+  z-index: 1000; 
+  width: 300px; 
+  opacity: 0; 
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease; 
+  background-color: #fff; 
+  border: 1px solid #ccc; 
+  border-radius: 8px; 
+  padding: 15px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
+
+#edit-form.show {
+  opacity: 1; 
+  transform: translateY(0); 
+}
+
+.profile-actions {
+  margin-bottom: 2em;
+}
+
+.profile-actions a.button {
+  padding: 0px 20px ;
+}
+
+/*dashboard*/
+.order-actions {
+  margin-top: 5em;
+  margin-left: 7em;
+}
+
+

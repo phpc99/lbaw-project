@@ -1,0 +1,885 @@
+openapi: 3.0.0
+
+info:
+ version: '1.0'
+ title: 'LBAW EcoNest Web API'
+ description: 'Web Resources Specification (A7) for EcoNest'
+
+servers:
+ - url: http://lbaw.fe.up.pt
+   description: Production server
+
+externalDocs:
+ description: Find more info here.
+ url: https://gitlab.up.pt/lbaw/lbaw2425/lbaw2456/-/wikis/home
+
+tags:
+ - name: 'M01: User Profile'
+ - name: 'M02: Static Pages'
+ - name: 'M03: Wishlist'
+ - name: 'M04: Review'
+ - name: 'M05: Product'
+ - name: 'M06: Order'
+ - name: 'M07: Category'
+ - name: 'M08: Cart'
+
+paths:
+
+# USER 
+
+  /login:
+
+    get:
+      operationId: R101
+      summary: 'R101: Login form'
+      description: 'Provide login form. Access: PUB'
+      tags:
+        - 'M01: User Profile'
+      responses:
+        '200':
+          description: 'Ok, show login UI'
+
+    post:
+      operationId: R102
+      summary: 'R102: Login action'
+      description: 'Processes the login form submission. Access: PUB'
+      tags:
+        - 'M01: User Profile'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:          
+                  type: string
+                password:   
+                  type: string
+              required:
+                  - email
+                  - password
+      responses:
+        '302':
+          description: 'Redirect after processing the login credentials.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful authentication. Redirect to user profile.'
+                  value: '/users/{userId}'
+                302Error:
+                  description: 'Failed authentication. Redirect to login form.'
+                  value: '/login'
+
+  /logout:
+
+    post:
+      operationId: R103
+      summary: 'R103: Logout action'
+      description: 'Logout the current authenticated user. Access: USR, ADM'
+      tags:
+        - 'M01: User Profile'
+      responses:
+        '302':
+          description: 'Redirect after processing logout.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful logout. Redirect to login form.'
+                  value: '/login'
+
+  /register:
+
+    get:
+      operationId: R104
+      summary: 'R104: Register form'
+      description: 'Provide new user registration form. Access: PUB'
+      tags:
+        - 'M01: User Profile'
+      responses:
+        '200':
+          description: 'Ok, show sign-up UI'
+
+    post:
+      operationId: R105
+      summary: 'R105: Register action'
+      description: 'Processes the new user registration form submission. Access: PUB'
+      tags:
+        - 'M01: User Profile'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+                  - email
+                  - password
+      responses:
+        '302':
+          description: 'Redirect after processing the new user information.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful authentication. Redirect to user profile.'
+                  value: '/users/{userId}'
+                302Failure:
+                  description: 'Failed authentication. Redirect to login form.'
+                  value: '/login'
+
+  /users/{userId}:
+
+    get:
+      operationId: R106
+      summary: 'R106: View user profile'
+      description: 'Retrieves details of a specific user. Access: USR'
+      tags: 
+        - 'M01: User Profile'
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: 'Ok, show profile UI'
+
+    delete:
+      operationId: R107
+      summary: 'R107: Delete user'
+      description: 'Delete an existing user. Access: USR, ADM'
+      tags:
+        - 'M01: User Profile'
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+      responses:
+        '302':
+          description: 'Ok, user deleted. Return to homepage'
+          headers:
+          Location:
+            description: 'Redirect to homepage'
+            schema:
+              type: string
+              example: '/home'
+        '403':
+          description: 'Could not delete the profile'      
+
+  /users/{userId}/updateProfile:
+
+    put:
+      operationId: R108
+      summary: 'R108: Update user profile'
+      description: 'Update the current user profile information. Access: USR'
+      tags:
+        - 'M01: User Profile'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+              required:
+                - name
+                - email
+      responses:
+        '200':
+          description: 'User profile updated successfully.'
+        '403':
+          description: 'Could not update the profile.'
+
+  /password/reset:
+
+    post:
+      operationId: R109
+      summary: 'R109: Reset Password'
+      description: 'Reset the user password. Access: USR'
+      tags:
+        - 'M01: User Profile'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+              required:
+                - email
+      responses:
+        '200':
+          description: 'Link sent to recover password.'
+        '403':
+          description: 'Could not reset password.'
+
+  /password/forgot:
+
+    post:
+      operationId: R110
+      summary: 'R110: Forgot Password'
+      description: 'Send a password recovery email. Access: USR'
+      tags:
+        - 'M01: User Profile'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+              required:
+                - email
+      responses:
+        '200':
+          description: 'Email sent to recover password.'
+        '403':
+          description: 'Could not send email.'  
+
+# STATIC PAGES
+
+  /about:
+
+    get:
+      operationId: R201
+      summary: 'R201: About page'
+      description: 'Returns the content of the About page.'
+      tags:
+        - 'M03: Static Pages'
+      responses:
+        '200':
+          description: 'About page content retrieved. Show UI.'
+
+  /faq:
+
+    get:
+      operationId: R202
+      summary: 'R202: FAQ page'
+      description: 'Returns the content of the FAQ page.'
+      tags:
+        - 'M03: Static Pages'
+      responses:
+        '200':
+          description: 'FAQ page content retrieved. Show UI.'
+
+  /contact:
+
+    get:
+      operationId: R203
+      summary: 'R203: Contact page'
+      description: 'Returns the content of the Contact page.'
+      tags:
+        - 'M03: Static Pages'
+      responses:
+        '200':
+          description: 'Contact page content retrieved. Show UI.'
+
+# WISHLIST
+
+  /wishlist:
+    get:
+      operationId: R301
+      summary: 'R301: View wishlist'
+      description: 'Retrieve the current items in the wishlist. Access: USR'
+      tags:
+        - 'M03: Wishlist'
+      responses:
+        '200':
+          description: 'Successfully retrieved wishlist.'
+          content:
+            application/x-www-form-urlencoded:
+              schema:
+                type: object
+                properties:
+                  wishlistId:
+                    type: string
+                    description: 'Unique identifier for the wishlist.'
+                  items:
+                    type: array
+                    description: 'List of items in the wishlist.'
+                    items:
+                      type: object
+                      properties:
+                        productId:
+                          type: string
+                          description: 'The unique identifier of the product.'
+                        name:
+                          type: string
+                          description: 'The name of the product.'
+                  required:
+                    - wishlistId
+                    - items
+
+  /wishlist/add:
+
+    post:
+      operationId: R302
+      summary: 'R302: Add to wishlist'
+      description: 'Adds a product to the user wishlist. Access: USR'
+      tags: 
+        - 'M03: Wishlist'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                productId:
+                  type: integer
+              required:
+                - productId    
+      responses:
+        '200':
+          description: 'Product added to wishlist.'
+        '403':
+          description: 'Could not add item to wishlist.'
+
+  /wishlist/delete:
+
+    delete:
+      operationId: R303
+      summary: 'R303: Remove from wishlist'
+      description: 'Removes a product from the user wishlist. Access: USR'
+      tags: 
+        - 'M03: Wishlist'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                productId:
+                  type: integer
+              required:
+                - productId
+      responses:
+        '200':
+          description: 'Item removed from wishlist.'
+        '403':
+          description: 'Could not remove item from wishlist.'
+
+# REVIEW
+
+  /review/add:
+
+    post:
+      operationId: R401
+      summary: 'R401: Add review'
+      description: 'Allows a user to submit a review for a product. Access: OWN'
+      tags: 
+        - 'M04: Review'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                productId:
+                  type: integer
+                userId:
+                  type: integer
+                score:
+                  type: integer
+                comment:
+                  type: string
+                rev_date:
+                  type: string
+      responses:
+        '200':
+          description: 'Review published.'
+        '403':
+          description: 'Could not publish review.'
+
+  /review/delete:
+
+    delete:
+      operationId: R402
+      summary: 'R402: Delete review'
+      description: 'Delete an existing review. Access: OWN'
+      tags:
+        - 'M04: Review'
+      parameters:
+        - name: reviewId
+          in: query
+          description: 'The ID of the review to be deleted.'
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: 'Review deleted successfully.'
+        '403':
+          description: 'Could not delete review.'
+
+  /review/edit:
+    put:
+      operationId: R403
+      summary: 'R403: Edit review'
+      description: 'Edit an existing review. Access: OWN'
+      tags:
+        - 'M04: Review'
+      parameters:
+        - name: reviewId
+          in: query
+          description: 'The ID of the review to be edited.'
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                productId:
+                  type: integer
+                userId:
+                  type: integer
+                score:
+                  type: integer
+                comment:
+                  type: string
+                rev_date:
+                  type: string
+      responses:
+        '200':
+          description: 'Review edited successfully.'
+        '403':
+          description: 'Could not edit the review.'
+
+# PRODUCT
+
+  /products:
+    get:
+      operationId: R501
+      summary: 'R501: Search for products'
+      description: 'Returns a list of products based on search criteria such as keywords, category, price range, and rating. Access: PUB'
+      tags: 
+        - 'M05: Product'
+      parameters:
+        - in: query
+          name: query
+          required: false
+          schema:
+            type: string
+          description: 'Keywords to search for in the product name or description.'
+        - in: query
+          name: categoryId
+          required: false
+          schema:
+            type: integer
+          description: 'The ID of the category to filter products by.'
+        - in: query
+          name: min_price
+          required: false
+          schema:
+            type: number
+            format: float
+          description: 'The minimum price for filtering products.'
+        - in: query
+          name: max_price
+          required: false
+          schema:
+            type: number
+            format: float
+          description: 'The maximum price for filtering products.'
+        - in: query
+          name: min_rating
+          required: false
+          schema:
+            type: integer
+          description: 'The minimum rating (0-5) for filtering products.'
+        - in: query
+          name: sort_by
+          required: false
+          schema:
+            type: string
+            enum: [price, rating, name]
+          description: 'The field to sort the products by (price, rating, or name).'
+        - in: query
+          name: order
+          required: false
+          schema:
+            type: string
+            enum: [asc, desc]
+          description: 'The sorting order (ascending or descending).'
+      responses:
+        '200':
+          description: 'A list of matching products.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    productId:
+                      type: integer
+                      description: 'The unique identifier for the product.'
+                    name:
+                      type: string
+                      description: 'The name of the product.'
+                    price:
+                      type: number
+                      format: float
+                      description: 'The price of the product.'
+                    description:
+                      type: string
+                      description: 'A brief description of the product.'
+                    rating:
+                      type: integer
+                      description: 'The average rating of the product (0-5).'
+                    category:
+                      type: string
+                      description: 'The category of the product.'
+        '403':
+          description: 'Invalid query parameters.'
+
+  /products/add:
+
+    post:
+      operationId: R502
+      summary: 'R502: Add new product'
+      description: 'Adds a new product to the catalog. Access: ADM'
+      tags: 
+        - 'M05: Product'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                price:
+                  type: float
+                quantity:
+                  type: integer
+                rating:
+                  type: integer
+                description:
+                  type: string
+                foot_print:
+                  type: integer
+                publication_date:
+                  type: integer
+              required:
+                - name
+                - price
+                - description
+      responses:
+        '200':
+          description: 'Product added successfully.'
+        '403':
+          description: 'Could not add product.'
+
+  /products/delete:
+
+    delete:
+      operationId: R503
+      summary: 'R503: Delete product'
+      description: 'Delete an existing product. Access: ADM'
+      tags:
+        - 'M05: Product'
+      parameters:
+        - name: productId
+          in: query
+          description: 'The ID of the product to be deleted.'
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '200':
+          description: 'Product deleted successfully.'
+        '403':
+          description: 'Could not delete the product.'
+
+# ORDER
+
+  /orders:
+
+    get:
+      operationId: R601
+      summary: 'R601: View orders'
+      description: 'Returns a list of all orders. Access: ADM'
+      tags: 
+        - 'M06: Orders'
+      responses:
+        '200':
+          description: 'Orders retrieved successfully.'
+        '403':
+          description: 'Could not display orders.'
+
+  /orders/add:
+
+    get:
+      operationId: R602
+      summary: 'R602: Create an order'
+      description: 'Create a new order. Access: USR'
+      tags: 
+        - 'M06: Order'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: integer
+                addressId:
+                  type: integer
+                payment_method:
+                  type: string
+                total:
+                  type: number
+                  format: float
+                  minimum: 0
+                delivery_progress:
+                  type: string
+                  enum: ["pending", "shipped", "delivered"]
+              required:
+                - userId
+                - addressId
+                - payment_method
+                - total
+                - delivery_progress
+      responses:
+        '200':
+          description: 'Order successfully created.'
+        '403':
+          description: 'Could not create order.'
+
+  /orders/{orderId}:
+
+    put:
+      operationId: R603
+      summary: 'R603: Update order status'
+      description: 'Update the status of an order. Access: ADM'
+      tags:
+        - 'M06: Order'
+      parameters:
+        - name: orderId
+          in: path
+          description: 'The ID of the order to update.'
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                delivery_progress:
+                  type: string
+                  enum: ["pending", "processing", "completed", "cancelled"]
+              required:
+                - delivery_progress
+      responses:
+        '200':
+          description: 'Order status updated successfully.'
+        '403':
+          description: 'Could not update order status.'
+
+# CATEGORY
+
+  /categories/add:
+
+    post:
+      operationId: R701
+      summary: 'R701: Add category'
+      description: 'Adds a new category to the system. Access: ADM'
+      tags: 
+        - 'M07: Category'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        '200':
+          description: Category added
+        '403':
+          description: 'Could not add category.'
+
+  /categories/delete:
+
+    delete:
+      operationId:  R702
+      summary: 'R702: Delete category'
+      description: 'Delete an existing category. Access: ADM'
+      tags:
+        - 'M07: Category'
+      parameters:
+        - name: categoryId
+          in: query
+          required: true
+          description: 'The ID of the product to be deleted.'
+          schema:
+            type: integer
+
+      responses:
+        '200':
+          description: 'Category deleted successfully.'
+        '403':
+          description: 'Could not delete category.'
+
+# CART
+
+  /cart/add:
+
+    post:
+      operationId: R801
+      summary: 'R801: Add item to cart'
+      description: 'Adds an item to the user shopping cart. Access: USR, PUB'
+      tags: 
+        - 'M08: Cart'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                productId:
+                  type: integer
+                quantity:
+                  type: integer
+      responses:
+        '200':
+          description: 'Item added to cart successfully.'
+        '403':
+          description: 'Could not add item to cart.'
+
+  /cart/delete:
+
+    delete:
+      operationId: R802
+      summary: 'R802: Remove item from cart'
+      description: 'Remove an item from the shopping cart. Access: USR, PUB'
+      tags:
+        - 'M08: Cart'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                productId:
+                  type: string
+              required:
+                - productId
+      responses:
+        '200':
+          description: 'Item removed from cart.'
+        '403':
+          description: 'Could not remove item from cart.'
+
+  /cart/update:
+    
+    put:
+      operationId: R803
+      summary: 'R803: Update item quantity in cart'
+      description: 'Update the quantity of an item in the shopping cart. Access: USR, PUB'
+      tags:
+        - 'M08: Cart'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                productId:
+                  type: string
+                quantity:
+                  type: integer
+                  minimum: 1
+              required:
+                - productId
+                - quantity
+      responses:
+        '200':
+          description: 'Cart item quantity updated.'
+        '403':
+          description: 'Could not update item from cart.'
+
+  /cart:
+
+    get:
+      operationId: R804
+      summary: 'R804: View shopping cart'
+      description: 'Retrieve the current items in the shopping cart. Access: USR, PUB'
+      tags:
+        - 'M08: Cart'
+      responses:
+        '200':
+          description: 'Successfully retrieved shopping cart.'
+          content:
+            application/x-www-form-urlencoded:
+              schema:
+                type: object
+                properties:
+                  cartId:
+                    type: integer
+                    description: 'Unique identifier for the shopping cart.'
+                  items:
+                    type: array
+                    description: 'List of items in the shopping cart.'
+                    items:
+                      type: object
+                      properties:
+                        productId:
+                          type: integer
+                          description: 'The unique identifier of the product.'
+                  quantity:
+                    type: integer
+                    description: 'The quantity of the product in the cart.'
+                  total:
+                    type: number
+                    format: float
+                    description: 'The Total price of all units of that item.'
+                required:
+                  - cartId
+                  - items
+                  - total
+        '403':
+          description: 'Couldnot get the data.'
