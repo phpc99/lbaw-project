@@ -10,6 +10,8 @@
 - Enabled administrators to manage products, monitor orders, and handle refunds and customer support;
 - Integrated a FAQ section and customer inquiry system to improve user assistance.
 
+# Screenshots
+
 # Authors
 - Bernardo Marques Soares da Costa, up202207579@up.pt
 - Carlos Daniel Santos Reis, up201805156@up.pt
